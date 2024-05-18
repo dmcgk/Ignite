@@ -100,29 +100,40 @@ public struct MetaTag: HeadElement {
         for page: Page,
         context: PublishingContext
     ) -> [MetaTag] {
-        MetaTag(property: "og:site_name", content: context.site.name)
-
         if let image = page.image {
-            MetaTag(property: "og:image", content: image)
-            MetaTag(property: "twitter:image", content: image)
+            if context.site.openGraphMetaTagsEnabled {
+                MetaTag(property: "og:image", content: image)
+            }
+            if context.site.twitterMetaTagsEnabled {
+                MetaTag(property: "twitter:image", content: image)
+            }
         }
 
-        MetaTag(property: "og:title", content: page.title)
-        MetaTag(property: "twitter:title", content: page.title)
+        if context.site.openGraphMetaTagsEnabled {
+            MetaTag(property: "og:site_name", content: context.site.name)
+            MetaTag(property: "og:url", content: page.url)
+            MetaTag(property: "og:title", content: page.title)
+        }
+
+        if context.site.twitterMetaTagsEnabled {
+            MetaTag(property: "twitter:title", content: page.title)
+
+            if let domain = context.site.url.removingWWW {
+                MetaTag(name: "twitter:domain", content: domain)
+            }
+
+            MetaTag(name: "twitter:card", content: "summary_large_image")
+            MetaTag(name: "twitter:dnt", content: "on")
+        }
 
         if page.description.isEmpty == false {
-            MetaTag(property: "og:description", content: page.title)
-            MetaTag(name: "twitter:description", content: page.title)
+            if context.site.openGraphMetaTagsEnabled {
+                MetaTag(property: "og:description", content: page.title)
+            }
+            if context.site.twitterMetaTagsEnabled {
+                MetaTag(name: "twitter:description", content: page.title)
+            }
         }
-
-        MetaTag(property: "og:url", content: page.url)
-
-        if let domain = context.site.url.removingWWW {
-            MetaTag(name: "twitter:domain", content: domain)
-        }
-
-        MetaTag(name: "twitter:card", content: "summary_large_image")
-        MetaTag(name: "twitter:dnt", content: "on")
     }
 
     /// Renders this element using publishing context passed in.

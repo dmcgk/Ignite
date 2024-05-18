@@ -65,6 +65,12 @@ public protocol Site {
     /// via another mechanism.
     var igniteSiteGeneratorMetaTagEnabled: Bool { get }
 
+    /// Whether or not the OpenGraph meta tags should be emitted.
+    var openGraphMetaTagsEnabled: Bool { get }
+
+    /// Whether or not the OpenGraph meta tags should be emitted.
+    var twitterMetaTagsEnabled: Bool { get }
+
     /// An array of syntax highlighters you want to enable for your site.
     var syntaxHighlighters: [SyntaxHighlighter] { get }
 
@@ -131,6 +137,12 @@ extension Site {
 
     /// Enable the Ignite site generator meta-tag by default.
     var igniteSiteGeneratorMetaTagEnabled: Bool { true }
+
+    /// Enable the OpenGraph meta tags by default.
+    var openGraphMetaTagsEnabled: Bool { true }
+
+    /// Enable the Twitter meta tags by default.
+    var twitterMetaTagsEnabled: Bool { true }
 
     /// Include no syntax highlighters by default.
     public var syntaxHighlighters: [SyntaxHighlighter] { [] }
