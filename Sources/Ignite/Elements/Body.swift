@@ -33,10 +33,13 @@ public struct Body: PageElement, HTMLRootElement {
         .class("col-sm-\(context.site.pageWidth)", "mx-auto")
         .render(context: context)
 
-        output += Script(file: "/js/bootstrap.bundle.min.js").render(context: context)
+        // Add script sources if the site supports it
+        if context.site.scriptingEnabled {
+            output += Script(file: "/js/bootstrap.bundle.min.js").render(context: context)
 
-        if context.site.syntaxHighlighters.isEmpty == false {
-            output += Script(file: "/js/syntax-highlighting.js").render(context: context)
+            if context.site.syntaxHighlighters.isEmpty == false {
+                output += Script(file: "/js/syntax-highlighting.js").render(context: context)
+            }
         }
 
         // Activate tooltips if there are any.

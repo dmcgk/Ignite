@@ -56,6 +56,15 @@ public protocol Site {
     /// Visit https://icons.getbootstrap.com for the full list.
     var builtInIconsEnabled: Bool { get }
 
+    /// Whether the site makes use of Javascript or not. Defaults to true.
+    /// Note: setting this value to false will also disable Actions.
+    var scriptingEnabled: Bool { get }
+
+    /// Whether or not Ignite is automatically tagged as the site generator
+    /// on every page. Defaults to true. Can be disabled if attribution is provided
+    /// via another mechanism.
+    var igniteSiteGeneratorMetaTagEnabled: Bool { get }
+
     /// An array of syntax highlighters you want to enable for your site.
     var syntaxHighlighters: [SyntaxHighlighter] { get }
 
@@ -116,6 +125,12 @@ extension Site {
 
     /// Disable Bootstrap icons by default.
     public var builtInIconsEnabled: Bool { false }
+
+    /// Enable Javascript by default.
+    var scriptingEnabled: Bool { true }
+
+    /// Enable the Ignite site generator meta-tag by default.
+    var igniteSiteGeneratorMetaTagEnabled: Bool { true }
 
     /// Include no syntax highlighters by default.
     public var syntaxHighlighters: [SyntaxHighlighter] { [] }

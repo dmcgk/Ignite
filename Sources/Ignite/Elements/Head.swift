@@ -64,7 +64,9 @@ public struct Head: HTMLRootElement {
             MetaTag(name: "author", content: context.site.author)
         }
 
-        MetaTag.generator
+        if context.site.igniteSiteGeneratorMetaTagEnabled {
+            MetaTag.generator
+        }
 
         Title(page.title)
 
